@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${sky.datasource.driver-class-name}
+      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${sky.datasource.username}
+      password: ${sky.datasource.password}
+
+logging:
+  level:
+    com:
+      lz:
+        mapper: debug
+        service: info
+        controller: info
+lz:
+  jwt:
+    secret-key: 3k9p2m8n4y5z6q
+    expireTime: 3600000
+
+

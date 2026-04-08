@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(D:\\myproject\\kqxt\\khxt/**)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src/**)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src\\api/**)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src\\components/**)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src\\utils/**)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src\\config/**)",
+      "Bash(findstr *)",
+      "Read(D:\\myproject\\kqxt\\khxt\\src\\components\\workbench/**)",
+      "Bash(mysql *)",
+      "Bash(java *)",
+      "Bash(target/dependency/* *)",
+      "Bash(javac *)"
+    ]
+  },
+  "$version": 3
+}
