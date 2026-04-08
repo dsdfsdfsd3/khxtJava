@@ -12,7 +12,15 @@
       "Bash(mysql *)",
       "Bash(java *)",
       "Bash(target/dependency/* *)",
-      "Bash(javac *)"
+      "Bash(javac *)",
+      "Read(D:\\MyProject\\khxt/**)",
+      "Read(D:\\MyProject\\khxt\\src/**)",
+      "Read(D:\\MyProject\\khxt\\src\\api/**)",
+      "Read(D:\\MyProject\\khxt\\src\\components/**)",
+      "Read(D:\\MyProject\\khxt\\src\\config/**)",
+      "Read(D:\\MyProject\\khxt\\src\\utils/**)",
+      "Read(D:\\MyProject\\khxt\\src\\assets/**)",
+      "Read(D:\\MyProject\\khxt\\src\\components\\workbench/**)"
     ]
   },
   "$version": 3

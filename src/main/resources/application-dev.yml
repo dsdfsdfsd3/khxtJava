@@ -1,8 +1,8 @@
 sky:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    host: localhost
-    port: 3306
+    host: 36.137.129.35
+    port: 13307
     database: khxt
     username: root
-    password: lz487817875
+    password: mysql_SF2mf3
