@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.mapper.EmployeeMapper">
+    
+    <resultMap id="EmployeeResultMap" type="com.lz.bean.Employee">
+        <id property="id" column="id"/>
+        <result property="empNo" column="emp_no"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="departmentId" column="department_id"/>
+        <result property="positionId" column="position_id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="status" column="status"/>
+        <result property="address" column="address"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="departmentName" column="dept_name"/>
+        <result property="positionName" column="post_name"/>
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="EmployeeResultMap">
+        SELECT e.*, d.dept_name, p.post_name, r.role_name
+        FROM employee e
+        LEFT JOIN department d ON e.department_id = d.id
+        LEFT JOIN position p ON e.position_id = p.id
+        LEFT JOIN role r ON e.role_id = r.id
+        ORDER BY e.id DESC
+    </select>
+
+    <select id="findByPage" resultMap="EmployeeResultMap">
+        SELECT e.*, d.dept_name, p.post_name, r.role_name
+        FROM employee e
+        LEFT JOIN department d ON e.department_id = d.id
+        LEFT JOIN position p ON e.position_id = p.id
+        LEFT JOIN role r ON e.role_id = r.id
+        <where>
+            <if test="name != null and name != ''">
+                AND e.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="departmentId != null">
+                AND e.department_id = #{departmentId}
+            </if>
+            <if test="status != null">
+                AND e.status = #{status}
+            </if>
+        </where>
+        ORDER BY e.id DESC
+        LIMIT #{start}, #{size}
+    </select>
+    
+    <select id="countByCondition" resultType="int">
+        SELECT COUNT(*) FROM employee
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="departmentId != null">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+    
+    <select id="findById" resultMap="EmployeeResultMap">
+        SELECT e.*, d.dept_name, p.post_name, r.role_name
+        FROM employee e
+        LEFT JOIN department d ON e.department_id = d.id
+        LEFT JOIN position p ON e.position_id = p.id
+        LEFT JOIN role r ON e.role_id = r.id
+        WHERE e.id = #{id}
+    </select>
+
+    <select id="findByEmpNo" resultMap="EmployeeResultMap">
+        SELECT * FROM employee WHERE emp_no = #{empNo}
+    </select>
+
+    <insert id="insert" parameterType="com.lz.bean.Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employee (emp_no, name, gender, phone, email, department_id, position_id, role_id,
+                              entry_date, status, address, remark)
+        VALUES (#{empNo}, #{name}, #{gender}, #{phone}, #{email}, #{departmentId}, #{positionId}, #{roleId},
+                #{entryDate}, #{status}, #{address}, #{remark})
+    </insert>
+
+    <update id="update" parameterType="com.lz.bean.Employee">
+        UPDATE employee
+        <set>
+            <if test="empNo != null">emp_no = #{empNo},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="departmentId != null">department_id = #{departmentId},</if>
+            <if test="positionId != null">position_id = #{positionId},</if>
+            <if test="roleId != null">role_id = #{roleId},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM employee WHERE id = #{id}
+    </delete>
+    
+    <select id="countActiveEmployees" resultType="int">
+        SELECT COUNT(*) FROM employee WHERE status = 1
+    </select>
+    
+    <select id="countByDepartment" resultType="java.util.HashMap">
+        SELECT d.dept_name AS departmentName, COUNT(e.id) AS employeeCount
+        FROM department d
+        LEFT JOIN employee e ON d.id = e.department_id AND e.status = 1
+        GROUP BY d.id, d.dept_name
+        ORDER BY employeeCount DESC
+    </select>
+    
+</mapper>
